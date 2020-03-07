@@ -8,7 +8,8 @@ jobs:
         os: [ubuntu-latest]
       fail-fast: false
     steps:
-      - run: docker build -t bar
+      - uses: actions/checkout@v2
+      - run: docker build -t bar .
       - run: docker inspect bar:latest
       - uses: Azure/docker-login@v1
         with:
@@ -21,7 +22,8 @@ jobs:
         os: [ubuntu-latest]
       fail-fast: false
     steps:
-      - run: docker build -t ${{ github.repository }}
+      - uses: actions/checkout@v2
+      - run: docker build -t ${{ github.repository }} .
       - run: docker inspect ${{ github.repository }}:latest
       - uses: Azure/docker-login@v1
         with:
