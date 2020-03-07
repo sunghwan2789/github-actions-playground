@@ -1,7 +1,7 @@
 on: [push]
 
 jobs:
-  pass-fail-powershell:
+  extract-tarball:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -9,19 +9,13 @@ jobs:
       fail-fast: false
     steps:
       - run: |
-          $digest = docker inspect --format='{{index .RepoDigests 0}}' `
-            sunghwan2789/minecraft-server:nanoserver-1809
-          Write-Host ($null -eq $digest)
-          $LASTEXITCODE = 0
-
-  no-fail-powershell:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest]
-      fail-fast: false
-    steps:
-      - run: docker pull sunghwan2789/minecraft-server:nanoserver-1809
-      - run: |
-          $digest = docker inspect --format='{{index .RepoDigests 0}}' sunghwan2789/minecraft-server:nanoserver-1809
-          Write-Host ($null -ne $digest)
+          $dockerfile = @'
+            FROM mcr.microsoft.com/windows/servercore:ltsc2016
+            RUN mkdir bin
+            RUN curl -fsSLo bundle.zip https://github.com/itzg/rcon-cli/releases/download/1.4.7/rcon-cli_1.4.7_windows_amd64.tar.gz
+            RUN tar -xf bundle.zip -C bin
+            RUN .\bin\rcon-cli.exe
+            CMD ["C:\\bin\\rcon-cli.exe"]
+          '@
+          $dockerfile | docker build -t bundle -
+          docker run -it --rm build
