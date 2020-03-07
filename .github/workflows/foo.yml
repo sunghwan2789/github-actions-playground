@@ -12,7 +12,10 @@ jobs:
           $dockerfile = @'
             FROM mcr.microsoft.com/windows/servercore:ltsc2016
             RUN mkdir bin
-            RUN curl -fsSLo bundle.zip https://github.com/itzg/rcon-cli/releases/download/1.4.7/rcon-cli_1.4.7_windows_amd64.tar.gz
+            SHELL [ "powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';" ]
+            RUN $url = 'https://github.com/itzg/rcon-cli/releases/download/1.4.7/rcon-cli_1.4.7_windows_amd64.tar.gz'; `
+              Invoke-WebRequest -UseBasicParsing -Uri $url -OutFile bundle.zip;
+            # RUN curl -fsSLo bundle.zip https://github.com/itzg/rcon-cli/releases/download/1.4.7/rcon-cli_1.4.7_windows_amd64.tar.gz
             RUN tar -xf bundle.zip -C bin
             RUN .\bin\rcon-cli.exe
             CMD ["C:\\bin\\rcon-cli.exe"]
