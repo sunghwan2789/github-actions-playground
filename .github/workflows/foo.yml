@@ -5,13 +5,18 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-2016]
+        os: [windows-2016, windows-2019]
+        include:
+          - os: windows-2016
+            host-tag: ltsc2016
+          - os: windows-2019
+            host-tag: ltsc2019
       fail-fast: false
     steps:
       - run: |
           $dockerfile = @'
             # escape=`
-            FROM mcr.microsoft.com/windows/servercore:ltsc2016
+            FROM mcr.microsoft.com/windows/servercore:${{ matrix.host-tag }}
             RUN mkdir bin
             SHELL [ "powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';" ]
             RUN $url = 'https://github.com/itzg/rcon-cli/releases/download/1.4.7/rcon-cli_1.4.7_windows_amd64.tar.gz'; `
