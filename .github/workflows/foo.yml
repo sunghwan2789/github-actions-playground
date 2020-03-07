@@ -9,9 +9,10 @@ jobs:
       fail-fast: false
     steps:
       - run: |
-          $digest = docker inspect --format='{{index .RepoDigests 0}}' sunghwan2789/minecraft-server:nanoserver-1809
+          $digest = docker inspect --format='{{index .RepoDigests 0}}' `
+            sunghwan2789/minecraft-server:nanoserver-1809 `
+            2>$null
           Write-Host ($null -eq $digest)
-        shell: pwsh -File {0}
 
   no-fail-powershell:
     runs-on: ${{ matrix.os }}
