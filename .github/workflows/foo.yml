@@ -24,8 +24,8 @@ jobs:
               Invoke-WebRequest -UseBasicParsing -Uri $url -OutFile bundle.zip;
             # RUN curl -fsSLo bundle.zip https://github.com/itzg/rcon-cli/releases/download/1.4.7/rcon-cli_1.4.7_windows_amd64.tar.gz
             RUN tar -xvf bundle.zip -C bin
-            RUN C:\\bin\rcon-cli.exe
+            RUN C:\\bin\rcon-cli.exe --help
             CMD ["C:\\bin\\rcon-cli.exe"]
           '@
-          $dockerfile | docker build -t bundle -
-          docker run -it --rm build
+          $dockerfile | docker build -t rcon-cli -
+          docker run -it --rm rcon-cli --help
