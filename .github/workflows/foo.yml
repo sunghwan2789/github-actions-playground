@@ -1,0 +1,21 @@
+on: [push]
+
+jobs:
+  docker-inspect-remote:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+      fail-fast: false
+    steps:
+      - run: docker inspect sunghwan2789/minecraft-server:nanoserver-1809
+  docker-inspect-pull:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+      fail-fast: false
+    steps:
+      - run: |
+          docker pull sunghwan2789/minecraft-server:nanoserver-1809
+          docker inspect sunghwan2789/minecraft-server:nanoserver-1809
