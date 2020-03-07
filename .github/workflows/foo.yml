@@ -15,6 +15,7 @@ jobs:
             RUN mkdir bin
             SHELL [ "powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';" ]
             RUN $url = 'https://github.com/itzg/rcon-cli/releases/download/1.4.7/rcon-cli_1.4.7_windows_amd64.tar.gz'; `
+              [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; `
               Invoke-WebRequest -UseBasicParsing -Uri $url -OutFile bundle.zip;
             # RUN curl -fsSLo bundle.zip https://github.com/itzg/rcon-cli/releases/download/1.4.7/rcon-cli_1.4.7_windows_amd64.tar.gz
             RUN tar -xvf bundle.zip -C bin
