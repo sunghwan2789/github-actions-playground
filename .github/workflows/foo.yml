@@ -10,9 +10,9 @@ jobs:
     steps:
       - run: |
           $digest = docker inspect --format='{{index .RepoDigests 0}}' `
-            sunghwan2789/minecraft-server:nanoserver-1809 `
-            2>$null
+            sunghwan2789/minecraft-server:nanoserver-1809
           Write-Host ($null -eq $digest)
+          $LASTEXITCODE = 0
         shell: pwsh -File {0}
 
   no-fail-powershell:
