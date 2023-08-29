@@ -14,7 +14,5 @@ jobs:
       #- run: dir $env:RUNNER_TEMP -Recurse
       - run: Expand-Archive $env:RUNNER_TEMP\Gapotchenko.Eazfuscator.NET.*\*.nupkg ..\Eazfuscator -PassThru
       - run: gc $env:GITHUB_PATH
-      - run: Resolve-Path ..\Eazfuscator\tools
-      - run: echo (Resolve-Path ..\Eazfuscator\tools)
-      - run: echo (Resolve-Path ..\Eazfuscator\tools) >> $env:GITHUB_PATH 
+      - run: Resolve-Path ..\Eazfuscator\tools >> $env:GITHUB_PATH
       - run: Eazfuscator.Net.exe -h
