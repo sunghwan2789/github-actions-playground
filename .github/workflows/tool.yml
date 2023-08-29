@@ -12,7 +12,7 @@ jobs:
 
       - run: nuget install Gapotchenko.Eazfuscator.NET -OutputDirectory $env:RUNNER_TEMP
       #- run: dir $env:RUNNER_TEMP -Recurse
-      - run: Expand-Archive $env:RUNNER_TEMP\Gapotchenko.Eazfuscator.NET.*\*.nupkg $env:GITHUB_PATH -Force -PassThru
+      - run: Expand-Archive $env:RUNNER_TEMP\Gapotchenko.Eazfuscator.NET.*\*.nupkg $env:GITHUB_PATH\ -Force -PassThru
       - run: cp $env:GITHUB_PATH\tools\* ..\ -Recurse
       - run: dir $env:GITHUB_PATH
       - run: Eazfuscator.Net.exe -h
