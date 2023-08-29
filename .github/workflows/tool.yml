@@ -1,0 +1,14 @@
+on:
+  push:
+    branches:
+     - main
+
+jobs:
+  tool:
+    runs-on: windows-latest
+    steps:
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v3
+
+      - run: dotnet tool install -g Gapotchenko.Eazfuscator.NET
+      - run: Eazfuscator.Net.exe -h
